@@ -95,7 +95,7 @@ public class Jogo {
     }
 
     public static void qualquerCoisaContinua() {
-        System.out.print("\nDigite qualquer coisa aqui continuar -> ");
+        System.out.print("\nDigite qualquer coisa para continuar -> ");
         sc.next();
     }
 
@@ -326,9 +326,24 @@ public class Jogo {
             return true;
     }
 
+    public static void regras() throws InterruptedException, IOException {
+        LimparConsole();
+        printLinha();
+        escrever("REGRAS DO JOGO RPG - AVATAR X INIMIGO");
+        escrever("Ao iniciar, será necessário escolher um personagem (herói ou monstro).");
+        escrever("Cada personagem tem seus atributos únicos. Escolha com calma o seu personagem.");
+        escrever("Os personagens possuem Pontos de Vida (PV).");
+        escrever("Se um personagem ficar com PV igual ou abaixo de zero entao o oponente será o vencedor.");
+        escrever("O dano causado por um ataque depende da força do atacante e da defesa do defensor, enquanto o dano");
+        escrever("recebido depende da força do atacante e da resistência do defensor e da eficácia de sua defesa.");
+        printLinha();
+        qualquerCoisaContinua();
+    }
+
     public static void jogar() throws InterruptedException, IOException {
         boolean continuaJogando = true;
         do {
+            regras();
             escolherPersonagem();
             escolherInimigo();
             Batalha();
