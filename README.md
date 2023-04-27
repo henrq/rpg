@@ -3,15 +3,18 @@
 ## 📋 Descrição
 Alo desenvolvedor!
 
-Este projeto foi executado como um desafio durante minha jornada na Internal Talent da Avanade. Como nunca tinha feito até então nada em Java tive que correr com meus estudos em paralelo desenvolvendo este Demo de RPG no console.
+Este projeto foi executado como um desafio durante minha jornada na Internal Talent da Avanade. Como nunca tinha feito qualquer projeto em Java, tive que correr com meus estudos em paralelo com o desenvolvendo desta Demo de RPG no console.
 
+## ATENÇÃO
+O Projeto esta INCOMPLETO. Á lógica funciona como um protótipo no terminal, mas o desenvolvimento do CRUD e Swagger não foi possível nem testar o código inicial que foi desenvolvido. Ou seja, não deu para testar nada via Controller, Services e Repositories.
 
-
+Não consegui instalar nenhum banco dados como dependencia do Maven no projeto. Todas as tentativas apresentaram erros de vulnerabilidade grave. Até mesmo o H2 não funcionou. Realizei
+a copia integral do arquio pom.xml do projeto SpringBootBasics do Marcos Gonçalves e mesmo assim continuou com 3 erros de vulnerabilidade. Como o tempo para o Desenvolvimento estava acabando e estava ficando meio louco, deixei o estudo dos erros para depois.
 
 ## 🖥️ Tecnologias
 
-- Linguagem Java versão 17
-- Spring Boot 3.0.6 usando Maven
+- Linguagem Java
+- Spring Boot usando Maven
 
 
 ## 🎨 Projetos
