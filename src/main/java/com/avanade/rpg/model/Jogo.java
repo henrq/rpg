@@ -24,6 +24,9 @@ public class Jogo {
 
     public static Personagem inimigo;
     public static Personagem avatar;
+    public static Personagem inimigoClone;
+    public static Personagem avatarClone;
+
     public static Personagem personagemAtaque;
     public static Personagem personagemDefesa;
 
@@ -31,7 +34,17 @@ public class Jogo {
     public static int pontosDefesa;
 
     public Jogo() {
+    }
 
+    public static void recarregarVidasPersonagens(int guerreiroVida, int barbaroVida, int cavaleiroVida, int orcVida,
+            int giganteVida,
+            int lobisomenVida) {
+        guerreiro.setVida(guerreiroVida);
+        barbaro.setVida(barbaroVida);
+        cavaleiro.setVida(cavaleiroVida);
+        orc.setVida(orcVida);
+        gigante.setVida(giganteVida);
+        lobisomen.setVida(lobisomenVida);
     }
 
     public static int ler(String prompt, int maximo) {
@@ -193,7 +206,6 @@ public class Jogo {
             escrever(personagemAtaque.nome + " esta pronto para atacar com sua(s) " + personagemAtaque.getVida()
                     + " vidas?");
             responderSimOuNao();
-            // LimparConsole();
         }
 
         pontosAtaque = jogarDados(1, 12) + personagemAtaque.getForca() + personagemAtaque.getAgilidade();
@@ -206,8 +218,6 @@ public class Jogo {
     public static int Defender() throws InterruptedException, IOException {
 
         if (avatar == personagemDefesa) {
-
-            // printLinha();
             escrever(personagemDefesa.nome + " esta pronto para defender sua(s) " +
                     personagemDefesa.getVida() + " vidas?");
             responderSimOuNao();
@@ -242,9 +252,12 @@ public class Jogo {
             }
 
         }
-        // escrever("Clique 1 para continuar...");
-        // responderSimOuNao();
+
         return morreu;
+    }
+
+    public static void mostrarPlacar() {
+        escrever("PLACAR DA BATALHA: AVATAR [" + avatar.getVida() + "] X [" + inimigo.getVida() + "] INIMIGO");
     }
 
     public static void guerrear() throws InterruptedException, IOException {
@@ -254,13 +267,13 @@ public class Jogo {
         Personagem personagemMudanca = avatar;
 
         do {
-
             Atacar();
             Defender();
             terminajogo = CalcularDano();
             personagemMudanca = personagemAtaque;
             personagemAtaque = personagemDefesa;
             personagemDefesa = personagemMudanca;
+            mostrarPlacar();
 
         } while (!terminajogo);
 
@@ -302,23 +315,29 @@ public class Jogo {
         } while (!personagemCerto);
     }
 
-    public static void jogar() throws InterruptedException, IOException {
-        escolherPersonagem();
-        escolherInimigo();
-        Batalha();
-        Iniciativa();
-        jogarDadosIniciativa();
-        guerrear();
+    private static boolean continuarSimOuNao() {
+        System.out.println("(1) Sim.");
+        System.out.println("(2) Nao.");
+        System.out.println("(Qualquer coisa) Sim.");
+        int input = (int) ler("Resposta: ->", 2);
+        if (input == 2)
+            return false;
+        else
+            return true;
     }
 
-    // Estoria.printIntroducao();
-
-    // jogador = new Jogador(name);
-
-    // Estoria.printAcao1Entrando();
-
-    // estaRodando = true;
-
-    // JogarLoop();
-
+    public static void jogar() throws InterruptedException, IOException {
+        boolean continuaJogando = true;
+        do {
+            escolherPersonagem();
+            escolherInimigo();
+            Batalha();
+            Iniciativa();
+            jogarDadosIniciativa();
+            guerrear();
+            recarregarVidasPersonagens(20, 21, 26, 42, 34, 34);
+            escrever("Deseja Continuar Jogando?");
+            continuaJogando = continuarSimOuNao();
+        } while (continuaJogando);
+    }
 }
