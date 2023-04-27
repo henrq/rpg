@@ -182,10 +182,14 @@ public class Jogo {
     }
 
     public static int Atacar() {
-        printLinha();
-        escrever(personagemAtaque.nome + " esta pronto para atacar com sua(s) " + personagemAtaque.getVida()
-                + " vidas?");
-        responderSimOuNao();
+
+        if (avatar == personagemAtaque) {
+            printLinha();
+            escrever(personagemAtaque.nome + " esta pronto para atacar com sua(s) " + personagemAtaque.getVida()
+                    + " vidas?");
+            responderSimOuNao();
+        }
+
         pontosAtaque = jogarDados(1, 12) + personagemAtaque.getForca() + personagemAtaque.getAgilidade();
         printLinha();
         escrever(personagemAtaque.nome + " o seu ataque foi de " + pontosAtaque + " pontos.");
@@ -194,9 +198,14 @@ public class Jogo {
     }
 
     public static int Defender() {
-        printLinha();
-        escrever(personagemDefesa.nome + " esta pronto para defender sua(s) " + personagemDefesa.getVida() + " vidas?");
-        responderSimOuNao();
+
+        if (avatar == personagemDefesa) {
+            printLinha();
+            escrever(personagemDefesa.nome + " esta pronto para defender sua(s) " +
+                    personagemDefesa.getVida() + " vidas?");
+            responderSimOuNao();
+        }
+
         pontosDefesa = jogarDados(1, 12) + personagemDefesa.getDefesa() + personagemDefesa.getAgilidade();
         printLinha();
         escrever(personagemDefesa.nome + " a sua defesa foi de " + pontosDefesa + " pontos.");
@@ -231,10 +240,16 @@ public class Jogo {
 
         boolean terminajogo = false;
 
+        Personagem personagemMudanca = avatar;
+
         do {
+
             Atacar();
             Defender();
             terminajogo = CalcularDano();
+            personagemMudanca = personagemAtaque;
+            personagemAtaque = personagemDefesa;
+            personagemDefesa = personagemMudanca;
 
         } while (!terminajogo);
 
@@ -274,6 +289,15 @@ public class Jogo {
                 inimigo = monstros[personagem - 1];
             }
         } while (!personagemCerto);
+    }
+
+    public static void jogar() {
+        escolherPersonagem();
+        escolherInimigo();
+        Batalha();
+        Iniciativa();
+        jogarDadosIniciativa();
+        guerrear();
     }
 
     // Estoria.printIntroducao();
