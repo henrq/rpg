@@ -1,6 +1,6 @@
 package com.avanade.rpg.model;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -57,10 +57,15 @@ public class Jogo {
         System.out.print(mensagem);
     }
 
-    public static void LimparConsole() {
-        for (int i = 0; i < 4; i++) {
-            System.out.println();
-        }
+    public static void LimparConsole() throws InterruptedException, IOException {
+        // for (int i = 0; i < 4; i++) {
+        // System.out.println();
+        // }
+        // Limpa a tela no windows, no linux e no MacOS
+        if (System.getProperty("os.name").contains("Windows"))
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        else
+            Runtime.getRuntime().exec("clear");
     }
 
     public static void printLinha() {
@@ -92,7 +97,7 @@ public class Jogo {
                 "Precisamos definir quem vai começar o jogo atacando ou como chamamos no RPG, quem terá a iniciativa.\nPara isso, jogue um dado de 20 faces (número possível de 1 a 20).\nNao temos empates e quem tirar o maior valor terá a iniciativa.");
     }
 
-    public static void jogarDadosIniciativa() {
+    public static void jogarDadosIniciativa() throws InterruptedException, IOException {
         escrever("Agora AVATAR " + avatar.nome + " jogue o dado de 20 faces.");
         escrever("Esta pronto?");
         responderSimOuNao();
@@ -122,7 +127,8 @@ public class Jogo {
                 + avatar.getFacesDados() + " faces.");
     }
 
-    public static void Batalha() {
+    public static void Batalha() throws InterruptedException, IOException {
+        LimparConsole();
         printCabecalho("A BATALHA VAI COMECAR!");
         escrever("AVATAR:" + avatar.nome + " X " + "INIMIGO:" + inimigo.nome);
     }
@@ -132,7 +138,7 @@ public class Jogo {
         return resultado;
     }
 
-    public static void escolherPersonagem() {
+    public static void escolherPersonagem() throws InterruptedException, IOException {
         printLinha();
         boolean personagemCerto = false;
         do {
@@ -154,7 +160,7 @@ public class Jogo {
 
     }
 
-    private static boolean escolherResposta(boolean personagemCerto) {
+    private static boolean escolherResposta(boolean personagemCerto) throws InterruptedException, IOException {
         printLinha();
         int maximo = personagens.length;
         int personagem = ler("Resposta: ->", maximo);
@@ -174,33 +180,34 @@ public class Jogo {
 
         int input = 2;
         do {
-            printLinha();
             System.out.println("(1) Sim.");
             System.out.println("(2) Nao.");
             input = (int) ler("Resposta: ->", 2);
         } while (input != 1);
     }
 
-    public static int Atacar() {
+    public static int Atacar() throws InterruptedException, IOException {
 
         if (avatar == personagemAtaque) {
             printLinha();
             escrever(personagemAtaque.nome + " esta pronto para atacar com sua(s) " + personagemAtaque.getVida()
                     + " vidas?");
             responderSimOuNao();
+            // LimparConsole();
         }
 
         pontosAtaque = jogarDados(1, 12) + personagemAtaque.getForca() + personagemAtaque.getAgilidade();
         printLinha();
-        escrever(personagemAtaque.nome + " o seu ataque foi de " + pontosAtaque + " pontos.");
+        escrever("ATAQUE--> " + personagemAtaque.nome + " o seu ataque foi de " + pontosAtaque + " pontos.");
 
         return pontosAtaque;
     }
 
-    public static int Defender() {
+    public static int Defender() throws InterruptedException, IOException {
 
         if (avatar == personagemDefesa) {
-            printLinha();
+
+            // printLinha();
             escrever(personagemDefesa.nome + " esta pronto para defender sua(s) " +
                     personagemDefesa.getVida() + " vidas?");
             responderSimOuNao();
@@ -208,7 +215,9 @@ public class Jogo {
 
         pontosDefesa = jogarDados(1, 12) + personagemDefesa.getDefesa() + personagemDefesa.getAgilidade();
         printLinha();
-        escrever(personagemDefesa.nome + " a sua defesa foi de " + pontosDefesa + " pontos.");
+        escrever("DEFESA--> " + personagemDefesa.nome + " a sua defesa foi de " + pontosDefesa + " pontos.");
+
+        // LimparConsole();
         return pontosDefesa;
     }
 
@@ -233,10 +242,12 @@ public class Jogo {
             }
 
         }
+        // escrever("Clique 1 para continuar...");
+        // responderSimOuNao();
         return morreu;
     }
 
-    public static void guerrear() {
+    public static void guerrear() throws InterruptedException, IOException {
 
         boolean terminajogo = false;
 
@@ -258,7 +269,7 @@ public class Jogo {
 
     }
 
-    public static void escolherInimigo() {
+    public static void escolherInimigo() throws InterruptedException, IOException {
         printLinha();
         boolean personagemCerto = false;
         do {
@@ -291,7 +302,7 @@ public class Jogo {
         } while (!personagemCerto);
     }
 
-    public static void jogar() {
+    public static void jogar() throws InterruptedException, IOException {
         escolherPersonagem();
         escolherInimigo();
         Batalha();
