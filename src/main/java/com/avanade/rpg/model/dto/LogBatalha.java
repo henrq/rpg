@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -14,30 +15,30 @@ import java.io.Serializable;
 public class LogBatalha implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Log")
-    private Integer idLog;
-    @Column(name = "Batalha")
-    private Integer batalha;
+    @Column(name = "Id_LogBatalha")
+    private Integer idLogBatalha;
+    @Column(name = "Id_Batalha")
+    private Integer idBatalha;
+    @Column(name = "Turno")
+    private Integer turno;
     @Column(name = "Nome_Avatar")
     private String nomeAvatar;
-    @Column(name = "Ataque_Avatar")
-    private Integer ataqueAvatar;
-    @Column(name = "Defesa_Avatar")
-    private Integer defesaAvatar;
-    @Column(name = "Avatar_Vida")
-    private Integer avatarVida;
     @Column(name = "Nome_Inimigo")
     private String nomeInimigo;
-    @Column(name = "Ataque_Inimigo")
-    private Integer ataqueInimigo;
-    @Column(name = "Defesa_Inimigo")
-    private Integer defesaInimigo;
+    @Column(name = "Ataque")
+    private Integer ataque;
+    @Column(name = "Defesa")
+    private Integer defesa;
+    @Column(name = "Dano")
+    private Integer dano;
+    @Column(name = "Avatar_Vida")
+    private Integer avatarVida;
     @Column(name = "Inimigo_Vida")
     private Integer inimigoVida;
     @Column(name = "Iniciativa")
-    private Integer iniciativa;
-    @Column(name = "Turno")
-    private Integer turno;
+    private String iniciativa;
     @Column(name = "Vencedor")
     private String vencedor;
+    @Column(name = "Quando")
+    private LocalDateTime quando;
 }

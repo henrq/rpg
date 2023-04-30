@@ -17,24 +17,24 @@ import static springfox.documentation.builders.PathSelectors.regex;
 public class SwaggerConfig {
 
 	@Bean
-	public Docket productApi( ) {
-		return new Docket( DocumentationType.SWAGGER_2 ).select( )
-														.apis( RequestHandlerSelectors.basePackage(
-																"com.avanade.rpg" ) )
-														.paths( regex( "/rpg.*" ) )
-														.build( )
-														.apiInfo( metaInfo( ) );
+	public Docket productApi() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage(
+						"com.avanade.rpg"))
+				.paths(regex("/rpg.*"))
+				.build()
+				.apiInfo(metaInfo());
 	}
 
-	private ApiInfo metaInfo( ) {
+	private ApiInfo metaInfo() {
 
-		ApiInfo apiInfo = new ApiInfo( "RPG", "Desafio API REST - RPG", "1.0.0",
-									   "Terms of Service", new Contact( "Caio F. Beluque",
-																		"https://github.com/caiobeluque",
-																		"caiobeluque@gmail.com" ),
-									   "Apache License Version 2.0",
-									   "https://www.apache.org/licesen.html",
-									   new ArrayList< VendorExtension >( ) );
+		ApiInfo apiInfo = new ApiInfo("RPG", "API REST - RPG", "1.0.0",
+				"Terms of Service", new Contact("Henrique de Faria",
+						"https://github.com/henrq",
+						"henrqdefaria@gmail.com"),
+				"Apache License Version 2.0",
+				"https://www.apache.org/licesen.html",
+				new ArrayList<VendorExtension>());
 
 		return apiInfo;
 	}

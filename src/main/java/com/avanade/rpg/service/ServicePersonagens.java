@@ -16,7 +16,6 @@ public class ServicePersonagens {
     private RepositoryPersonagens repositorio;
 
     public Personagem create(Personagem personagem) {
-
         personagem.setNome(personagem.getNome());
         personagem.setTipo(personagem.getTipo());
         personagem.setAgilidade(personagem.getAgilidade());
@@ -25,12 +24,15 @@ public class ServicePersonagens {
         personagem.setVida(personagem.getVida());
         personagem.setQuantidadeDados(personagem.getQuantidadeDados());
         personagem.setFacesDados(personagem.getFacesDados());
-        personagem.setId(personagem.getId());
         return this.repositorio.save(personagem);
     }
 
     public List<Personagem> findAll() {
         return repositorio.findAll();
+    }
+
+    public List<Personagem> findAllMonster() {
+        return repositorio.findAllMonster();
     }
 
     public Personagem findById(Integer id) {

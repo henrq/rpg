@@ -1,33 +1,34 @@
 # -Capacitação JAVA
 
 ## 📋 Descrição
+
 Alo desenvolvedor!
 
 Este projeto foi executado como um desafio durante minha jornada na Internal Talent da Avanade. Como nunca tinha feito qualquer projeto em Java, tive que correr com meus estudos em paralelo com o desenvolvendo desta Demo de RPG no console.
 
 ## ATENÇÃO
-O Projeto esta INCOMPLETO. Á lógica funciona como um protótipo no terminal, mas o desenvolvimento do CRUD e Swagger não foi possível nem testar o código inicial que foi desenvolvido. Ou seja, não deu para testar nada via Controller, Services e Repositories.
 
-Não consegui instalar nenhum banco dados como dependencia do Maven no projeto. Todas as tentativas apresentaram erros de vulnerabilidade grave. Até mesmo o H2 não funcionou. Realizei
-a copia integral do arquio pom.xml do projeto SpringBootBasics do Marcos Gonçalves e mesmo assim continuou com 3 erros de vulnerabilidade. Como o tempo para o Desenvolvimento estava acabando e estava ficando meio louco, deixei o estudo dos erros para depois.
+O Projeto esta INCOMPLETO. Á lógica funciona como um protótipo no console, então quando solicitar
+Jogar pelo Swagger retorne ao terminal do projeto e interaja jogando o RPG.
 
 ## 🖥️ Tecnologias
 
 - Linguagem Java
 - Spring Boot usando Maven
-
+- Banco de dados H2
 
 ## 🎨 Projetos
-*✓ Falta Muito para estar Finalizado*
+
+_✓ Falta ser Finalizado_
 
 - Criação de um jogo RPG em Java.
 
 ## 🖼️ Informações do Jogo
 
-Junte-se à batalha épica estilo Advanced Dangeous & Dragons (AD&D) !! 
+Junte-se à batalha épica estilo Advanced Dangeous & Dragons (AD&D) !!
 Nos ajude a criar a melhor API Rest usando Java SpringBoot com banco de dados MySQL.
-O jogo, como todo bom RPG (Role Playing Game), será duelado em turnos. 
-Escolha o seu nome e personagem favorito (herói ou monstro). 
+O jogo, como todo bom RPG (Role Playing Game), será duelado em turnos.
+Escolha o seu nome e personagem favorito (herói ou monstro).
 O seu oponente sempre será um monstro, você pode escolher ou deixar aleatório.
 Sim, também teremos que “jogar” dados.
 Algumas regras:
@@ -41,6 +42,7 @@ Banco de Dados Postgres;
 Necessário criar o CRUD (Create, Read, Update e Delete) de cadastro de Personagem;
 
 ## Dados
+
 Os dados em jogos de RPG podem ter diferentes números de faces, indicado pelo número após a letra "d". Por
 exemplo, 1d12 indica que você deve jogar um dado de 12 faces, ou seja, o resultado será um número aleatório entre
 1 e 12.
@@ -52,11 +54,13 @@ número aleatório entre 2 e 40.
 ## Fluxo do Jogo
 
 ## Iniciativa
+
 Precisamos definir quem vai começar o jogo atacando ou como chamamos no RPG, quem terá a iniciativa.
 Para isso, jogue um dado de 20 faces (1d20 → número possível de 1 a 20).
 Não temos empates e quem tirar o maior valor terá a iniciativa.
 
 ## Turno
+
 O turno é dividido em 2 partes. Ataque e defesa.
 2.1) Ataque
 O ataque é bem simples. Precisará jogar um dado de 12 faces (1d12 → número possível de 1 a 12) somar com a Força e com a Agilidade.
@@ -66,6 +70,7 @@ Se o valor do ataque for maior do que a defesa, então o dano será calculado (p
 Se o valor do ataque for menor ou igual ao valor da defesa, então o defensor conseguiu realizar a defesa e não receberá nenhum dano..
 
 ## Dano
+
 Se a defesa foi menor do que o ataque então será necessário calcular o dano.
 O cálculo é bem simples.
 Jogue o(s) dado(s) de acordo com o Dano que o personagem possui e some o valor da Força do personagem.
@@ -77,17 +82,17 @@ Bárbaro → quantidade de dados x faces do dado, ou seja, 2 números aleatório
 Orc → quantidade de dados x faces do dado, ou seja, 3 números aleatórios que variam de 1 a 4 onde a soma será no mínimo 2 e no máximo 8.
 
 ## Pontos de Vida
+
 Por fim, temos os pontos de vida do personagem.
 Ao sofre o dano, devemos subtrair o valor do dano dos PV do personagem.
 O personagem que ficar com zero ou menos de PV então a luta terminará instantaneamente.
 
 ## Fim do Turno
+
 Se no fim do turno nenhum personagem ficou com zero ou menos PV então a luta continua e o próximo turno se inicia imediatamente.
 
 ## Historico
+
 Todos os detalhes das batalhas deverão ser salvas em tabela de LOG para futura conferência.
 Dados:
 qual heroi, qual monstro, quem iniciou a batalha, dados de cada turno (número do turno, dado de ataque, defesa,dano, etc)
-
-
-
