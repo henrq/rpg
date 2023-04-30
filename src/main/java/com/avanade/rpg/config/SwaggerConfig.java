@@ -29,9 +29,9 @@ public class SwaggerConfig {
 	private ApiInfo metaInfo() {
 
 		ApiInfo apiInfo = new ApiInfo("RPG", "API REST - RPG", "1.0.0",
-				"Terms of Service", new Contact("Henrique de Faria",
+				"Desenvolvedor: ", new Contact("Henrique de Faria",
 						"https://github.com/henrq",
-						"henrqdefaria@gmail.com"),
+						"henrique.de.faria@avanade.com"),
 				"Apache License Version 2.0",
 				"https://www.apache.org/licesen.html",
 				new ArrayList<VendorExtension>());
