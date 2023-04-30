@@ -4,7 +4,7 @@
 
 Alo desenvolvedor!
 
-Este projeto foi executado como um desafio durante minha jornada na Internal Talent da Avanade. Como nunca tinha feito qualquer projeto em Java, tive que correr com meus estudos em paralelo com o desenvolvendo desta Demo de RPG no console.
+Este projeto foi executado como um desafio durante minha jornada na Internal Talent da Avanade. Como nunca tinha feito qualquer projeto em Java, tive que correr com meus estudos Java em paralelo com o desenvolvendo desta Demo de RPG no console.
 
 ## ATENÇÃO
 
@@ -26,9 +26,9 @@ _✓ Falta ser Finalizado_
 ## 🖼️ Informações do Jogo
 
 Junte-se à batalha épica estilo Advanced Dangeous & Dragons (AD&D) !!
-Nos ajude a criar a melhor API Rest usando Java SpringBoot com banco de dados MySQL.
+
 O jogo, como todo bom RPG (Role Playing Game), será duelado em turnos.
-Escolha o seu nome e personagem favorito (herói ou monstro).
+Escolha o seu personagem (herói ou monstro).
 O seu oponente sempre será um monstro, você pode escolher ou deixar aleatório.
 Sim, também teremos que “jogar” dados.
 Algumas regras:
@@ -38,7 +38,6 @@ Os personagens possuem Pontos de Vida (PV);
 Se um personagem ficar com PV igual ou abaixo de zero então o oponente será o vencedor;
 O dano causado por um ataque depende da força do atacante e da defesa do defensor, enquanto o dano
 recebido depende da força do atacante e da resistência do defensor e da eficácia de sua defesa;
-Banco de Dados Postgres;
 Necessário criar o CRUD (Create, Read, Update e Delete) de cadastro de Personagem;
 
 ## Dados
