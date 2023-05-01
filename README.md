@@ -2,14 +2,7 @@
 
 ## 📋 Descrição
 
-Alo desenvolvedor!
-
 Este projeto foi executado como um desafio durante minha jornada na Internal Talent da Avanade. Como nunca tinha feito qualquer projeto em Java, tive que correr com meus estudos Java em paralelo com o desenvolvendo desta Demo de RPG no console.
-
-## ATENÇÃO
-
-O Projeto esta INCOMPLETO. Á lógica funciona como um protótipo no console, então quando solicitar
-Jogar pelo Swagger retorne ao terminal do projeto e interaja jogando o RPG.
 
 ## 🖥️ Tecnologias
 
@@ -51,6 +44,13 @@ Portanto, para jogar 2d20, você deve jogar dois dados de 20 faces e somar os re
 número aleatório entre 2 e 40.
 
 ## Fluxo do Jogo
+
+## Jogar (Iniciando o Jogo)
+
+Use a página Swagger http://localhost:8080/swagger-ui/index.html#
+e através dela selecione no [Personagem-Controller] o [GET][/rpg/Jogar]
+
+Após retorne para o console do projeto em execução e siga as instruções...
 
 ## Iniciativa
 

@@ -3,17 +3,18 @@ package com.avanade.rpg.service;
 import com.avanade.rpg.exception.InvalidInputException;
 import com.avanade.rpg.exception.ResourceNotFoundException;
 import com.avanade.rpg.model.dto.Personagem;
-import com.avanade.rpg.repository.RepositoryPersonagens;
+import com.avanade.rpg.repository.PersonagensRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ServicePersonagens {
+public class PersonagensService {
 
     @Autowired
-    private RepositoryPersonagens repositorio;
+    private PersonagensRepository repositorio;
 
     public Personagem create(Personagem personagem) {
         personagem.setNome(personagem.getNome());
@@ -27,12 +28,12 @@ public class ServicePersonagens {
         return this.repositorio.save(personagem);
     }
 
-    public List<Personagem> findAll() {
-        return repositorio.findAll();
+    public List<Personagem> createAll(List<Personagem> personagens) {
+        return this.repositorio.saveAll(personagens);
     }
 
-    public List<Personagem> findAllMonster() {
-        return repositorio.findAllMonster();
+    public List<Personagem> findAll() {
+        return repositorio.findAll();
     }
 
     public Personagem findById(Integer id) {
@@ -49,6 +50,14 @@ public class ServicePersonagens {
             throw new InvalidInputException("ID não encontrado!");
         }
         return repositorio.save(personagem);
+    }
+
+    public HttpStatus createAll(List<Personagem> personagens, HttpStatus created) {
+        return null;
+    }
+
+    public int findUltimoIdPersonagem() {
+        return 0;
     }
 
 }

@@ -17,6 +17,7 @@ public class LogBatalha implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_LogBatalha")
     private Integer idLogBatalha;
+
     @Column(name = "Id_Batalha")
     private Integer idBatalha;
     @Column(name = "Turno")

@@ -1,26 +1,23 @@
-package com.avanade.rpg.model;
+package com.avanade.rpg.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import com.avanade.rpg.model.domain.*;
+import com.avanade.rpg.model.dto.Personagem;
 
-public class Jogo {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
+public class JogoService {
+
+    @Autowired
     static Scanner sc = new Scanner(System.in);
 
-    public static Personagem guerreiro = new Personagem("Heroi", "Guerreiro", 20, 7, 5, 6, 1, 12);
-    public static Personagem barbaro = new Personagem("Heroi", "Barbaro", 21, 10, 2, 5, 2, 8);
-    public static Personagem cavaleiro = new Personagem("Heroi", "Cavaleiro", 26, 6, 8, 3, 2, 6);
-
-    public static Personagem orc = new Personagem("Monstro", "Orc", 42, 7, 1, 2, 3, 4);
-    public static Personagem gigante = new Personagem("Monstro", "Gigante", 34, 10, 4, 4, 2, 6);
-    public static Personagem lobisomen = new Personagem("Monstro", "Lobisomen", 34, 7, 4, 7, 2, 4);
-
-    public static Personagem[] personagens = { guerreiro, barbaro, cavaleiro, orc, gigante, lobisomen };
-    public static Personagem[] herois = { guerreiro, barbaro, cavaleiro };
-    public static Personagem[] monstros = { orc, gigante, lobisomen };
+    public List<Personagem> personagens;
+    public List<Personagem> monstros;
 
     public static Personagem inimigo;
     public static Personagem avatar;
@@ -33,19 +30,8 @@ public class Jogo {
     public static int pontosAtaque;
     public static int pontosDefesa;
 
-    public Jogo() {
-    }
-
-    public static void recarregarVidasPersonagens(int guerreiroVida, int barbaroVida, int cavaleiroVida, int orcVida,
-            int giganteVida,
-            int lobisomenVida) {
-        guerreiro.setVida(guerreiroVida);
-        barbaro.setVida(barbaroVida);
-        cavaleiro.setVida(cavaleiroVida);
-        orc.setVida(orcVida);
-        gigante.setVida(giganteVida);
-        lobisomen.setVida(lobisomenVida);
-    }
+    public static int NBatalha = 0;
+    public static int NTurno = 0;
 
     public static int ler(String prompt, int maximo) {
         int input;
@@ -111,24 +97,25 @@ public class Jogo {
     }
 
     public static void jogarDadosIniciativa() throws InterruptedException, IOException {
-        escrever("Agora AVATAR " + avatar.nome + " jogue o dado de 20 faces.");
+        escrever("Agora AVATAR " + avatar.getNome() + " jogue o dado de 20 faces.");
         escrever("Esta pronto?");
         responderSimOuNao();
         int pontosAvatar = jogarDados(1, 20);
         escrever("Voce obteve " + pontosAvatar + " pontos.");
 
-        escrever("Agora é a vez do seu INIMIGO " + inimigo.nome + " joguar o dado de 20 faces.");
+        escrever("Agora é a vez do seu INIMIGO " + inimigo.getNome() + " joguar o dado de 20 faces.");
         escrever("Esta pronto?");
         responderSimOuNao();
         int pontosInimigo = jogarDados(1, 20);
         escrever("O seu inimigo obteve " + pontosInimigo + " pontos.");
 
         if (pontosAvatar > pontosInimigo) {
-            escrever(avatar.nome + " voce esta com sorte, a iniciativa da batalha é sua.");
+            escrever(avatar.getNome() + " voce esta com sorte, a iniciativa da batalha é sua.");
             personagemAtaque = avatar;
             personagemDefesa = inimigo;
         } else {
-            escrever("Lamento " + avatar.nome + ", pois a iniciativa da batalha cabera ao seu inimigo " + inimigo.nome
+            escrever("Lamento " + avatar.getNome() + ", pois a iniciativa da batalha cabera ao seu inimigo "
+                    + inimigo.getNome()
                     + ".");
             personagemAtaque = inimigo;
             personagemDefesa = avatar;
@@ -136,14 +123,15 @@ public class Jogo {
     }
 
     public static void jogarDadosAvatar() {
-        printCabecalho("Agora é a vez do AVATAR " + avatar.nome + " jogar os seus " + avatar.getQtdDados() + " de "
-                + avatar.getFacesDados() + " faces.");
+        printCabecalho(
+                "Agora é a vez do AVATAR " + avatar.getNome() + " jogar os seus " + avatar.getQuantidadeDados() + " de "
+                        + avatar.getFacesDados() + " faces.");
     }
 
     public static void Batalha() throws InterruptedException, IOException {
         LimparConsole();
         printCabecalho("A BATALHA VAI COMECAR!");
-        escrever("AVATAR:" + avatar.nome + " X " + "INIMIGO:" + inimigo.nome);
+        escrever("AVATAR:" + avatar.getNome() + " X " + "INIMIGO:" + inimigo.getNome());
     }
 
     public static String espacosADireita(String nome) {
@@ -151,21 +139,22 @@ public class Jogo {
         return resultado;
     }
 
-    public static void escolherPersonagem() throws InterruptedException, IOException {
+    public void escolherPersonagem(List<Personagem> todosPersonagens) throws InterruptedException, IOException {
         printLinha();
+        personagens = todosPersonagens;
         boolean personagemCerto = false;
         do {
             LimparConsole();
             int i = 0;
             escrever("Escolha o seu Personagem (Heroi ou Monstro)");
             printLinha();
-            for (Personagem personagem : personagens) {
-                escrever("(" + ++i + ")" + espacosADireita(personagem.nome)
+            for (Personagem personagem : this.personagens) {
+                escrever("(" + ++i + ")" + espacosADireita(personagem.getNome())
                         + espacosADireita(" Vidas: " + personagem.getVida())
                         + espacosADireita(" Forca: " + personagem.getForca())
                         + espacosADireita(" Defesa: " + personagem.getDefesa())
                         + espacosADireita(" Agilidade: " + personagem.getAgilidade())
-                        + espacosADireita(" QDados: " + personagem.getQtdDados())
+                        + espacosADireita(" QDados: " + personagem.getQuantidadeDados())
                         + espacosADireita(" FDados: " + personagem.getFacesDados()));
             }
             personagemCerto = escolherResposta(personagemCerto);
@@ -173,18 +162,18 @@ public class Jogo {
 
     }
 
-    private static boolean escolherResposta(boolean personagemCerto) throws InterruptedException, IOException {
+    private boolean escolherResposta(boolean personagemCerto) throws InterruptedException, IOException {
         printLinha();
-        int maximo = personagens.length;
-        int personagem = ler("Resposta: ->", maximo);
+        int maximo = personagens.size();
+        int escolhido = ler("Resposta: ->", maximo);
         LimparConsole();
-        printCabecalho("Seu personagem é " + personagens[personagem - 1].nome + ".\n Esta correto?");
+        printCabecalho("Seu personagem é " + personagens.get(escolhido - 1).getNome() + ".\n Esta correto?");
         System.out.println("(1) Sim!");
         System.out.println("(2) Nao, quero mudar o personagem.");
         int input = ler("Resposta: ->", 2);
         if (input == 1) {
             personagemCerto = true;
-            avatar = personagens[personagem - 1];
+            avatar = personagens.get(escolhido - 1);
         }
         return personagemCerto;
     }
@@ -203,14 +192,14 @@ public class Jogo {
 
         if (avatar == personagemAtaque) {
             printLinha();
-            escrever(personagemAtaque.nome + " esta pronto para atacar com sua(s) " + personagemAtaque.getVida()
+            escrever(personagemAtaque.getNome() + " esta pronto para atacar com sua(s) " + personagemAtaque.getVida()
                     + " vidas?");
             responderSimOuNao();
         }
 
         pontosAtaque = jogarDados(1, 12) + personagemAtaque.getForca() + personagemAtaque.getAgilidade();
         printLinha();
-        escrever("ATAQUE--> " + personagemAtaque.nome + " o seu ataque foi de " + pontosAtaque + " pontos.");
+        escrever("ATAQUE--> " + personagemAtaque.getNome() + " o seu ataque foi de " + pontosAtaque + " pontos.");
 
         return pontosAtaque;
     }
@@ -218,14 +207,14 @@ public class Jogo {
     public static int Defender() throws InterruptedException, IOException {
 
         if (avatar == personagemDefesa) {
-            escrever(personagemDefesa.nome + " esta pronto para defender sua(s) " +
+            escrever(personagemDefesa.getNome() + " esta pronto para defender sua(s) " +
                     personagemDefesa.getVida() + " vidas?");
             responderSimOuNao();
         }
 
         pontosDefesa = jogarDados(1, 12) + personagemDefesa.getDefesa() + personagemDefesa.getAgilidade();
         printLinha();
-        escrever("DEFESA--> " + personagemDefesa.nome + " a sua defesa foi de " + pontosDefesa + " pontos.");
+        escrever("DEFESA--> " + personagemDefesa.getNome() + " a sua defesa foi de " + pontosDefesa + " pontos.");
 
         // LimparConsole();
         return pontosDefesa;
@@ -235,18 +224,19 @@ public class Jogo {
         boolean morreu = false;
 
         if (pontosAtaque > pontosDefesa) {
-            int pontosDano = jogarDados(personagemDefesa.getQtdDados(), personagemDefesa.getFacesDados());
+            int pontosDano = jogarDados(personagemDefesa.getQuantidadeDados(), personagemDefesa.getFacesDados());
             printLinha();
 
             personagemDefesa.setVida(personagemDefesa.getVida() - pontosDano);
-            escrever(personagemDefesa.nome + " Danos = " + pontosDano + " e ficou com " + personagemDefesa.getVida()
-                    + " vidas");
+            escrever(
+                    personagemDefesa.getNome() + " Danos = " + pontosDano + " e ficou com " + personagemDefesa.getVida()
+                            + " vidas");
 
             if (personagemDefesa.getVida() <= 0) {
                 printLinha();
-                escrever(personagemDefesa.nome + " com esse ataque acabou de morrer.");
+                escrever(personagemDefesa.getNome() + " com esse ataque acabou de morrer.");
                 printLinha();
-                escrever("O VENCEDOR DA BATALHA É " + personagemAtaque.nome + ", COM " + personagemAtaque.getVida()
+                escrever("O VENCEDOR DA BATALHA É " + personagemAtaque.getNome() + ", COM " + personagemAtaque.getVida()
                         + " VIDAS.");
                 morreu = true;
             }
@@ -282,8 +272,9 @@ public class Jogo {
 
     }
 
-    public static void escolherInimigo() throws InterruptedException, IOException {
+    public void escolherInimigo(List<Personagem> todosMonstros) throws InterruptedException, IOException {
         printLinha();
+        monstros = todosMonstros;
         boolean personagemCerto = false;
         do {
             LimparConsole();
@@ -291,39 +282,28 @@ public class Jogo {
             escrever("Escolha o seu Inimigo (Monstro)");
             printLinha();
             for (Personagem personagem : monstros) {
-                escrever("(" + ++i + ")" + espacosADireita(personagem.nome)
+                escrever("(" + ++i + ")" + espacosADireita(personagem.getNome())
                         + espacosADireita(" Vidas: " + personagem.getVida())
                         + espacosADireita(" Forca: " + personagem.getForca())
                         + espacosADireita(" Defesa: " + personagem.getDefesa())
                         + espacosADireita(" Agilidade: " + personagem.getAgilidade())
-                        + espacosADireita(" QDados: " + personagem.getQtdDados())
+                        + espacosADireita(" QDados: " + personagem.getQuantidadeDados())
                         + espacosADireita(" FDados: " + personagem.getFacesDados()));
             }
             printLinha();
-            int maximo = monstros.length;
-            int personagem = ler("Resposta: ->", maximo);
+            int maximo = monstros.size();
+            int escolhido = ler("Resposta: ->", maximo);
             LimparConsole();
-            printCabecalho("Seu inimigo é " + monstros[personagem - 1].nome + ".\n Esta correto?");
+            printCabecalho("Seu inimigo é " + monstros.get(escolhido - 1).getNome() + ".\n Esta correto?");
             System.out.println("(1) Sim!");
             System.out.println("(2) Nao, quero mudar meu inimigo.");
             int input = ler("Resposta: ->", 2);
             ;
             if (input == 1) {
                 personagemCerto = true;
-                inimigo = monstros[personagem - 1];
+                inimigo = monstros.get(escolhido - 1);
             }
         } while (!personagemCerto);
-    }
-
-    private static boolean continuarSimOuNao() {
-        System.out.println("(1) Sim.");
-        System.out.println("(2) Nao.");
-        System.out.println("(Qualquer coisa) Sim.");
-        int input = (int) ler("Resposta: ->", 2);
-        if (input == 2)
-            return false;
-        else
-            return true;
     }
 
     public static void regras() throws InterruptedException, IOException {
@@ -340,19 +320,30 @@ public class Jogo {
         qualquerCoisaContinua();
     }
 
-    public static void jogar() throws InterruptedException, IOException {
+    private static boolean continuarJogando() {
+
+        int input = 1;
+        do {
+            System.out.println("(1) Sim.");
+            input = (int) ler("Resposta: ->", 2);
+        } while (input != 1);
+
+        return true;
+    }
+
+    public void jogar(List<Personagem> personagens, List<Personagem> monstros)
+            throws InterruptedException, IOException {
         boolean continuaJogando = true;
         do {
             regras();
-            escolherPersonagem();
-            escolherInimigo();
+            escolherPersonagem(personagens);
+            escolherInimigo(monstros);
             Batalha();
             Iniciativa();
             jogarDadosIniciativa();
             guerrear();
-            recarregarVidasPersonagens(20, 21, 26, 42, 34, 34);
             escrever("Deseja Continuar Jogando?");
-            continuaJogando = continuarSimOuNao();
+            continuaJogando = continuarJogando();
         } while (continuaJogando);
     }
 }

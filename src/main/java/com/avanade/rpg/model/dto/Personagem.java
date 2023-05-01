@@ -32,4 +32,17 @@ public class Personagem implements Serializable {
     private Integer quantidadeDados;
     @Column(name = "Faces_Dados")
     private Integer facesDados;
+
+    public Personagem(String nome, String tipo, Integer agilidade, Integer forca, Integer defesa, Integer vida,
+            Integer quantidadeDados, Integer facesDados) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.agilidade = agilidade;
+        this.forca = forca;
+        this.defesa = defesa;
+        this.vida = vida;
+        this.quantidadeDados = quantidadeDados;
+        this.facesDados = facesDados;
+    }
+
 }
